@@ -1,6 +1,6 @@
 ﻿using FastEndpoints.Swagger;
 
-namespace KutCode.Cve.Api.Configuration;
+namespace KutCode.Security.Ldap.WebApi.Configuration;
 
 public static class SwaggerConfiguration
 {
@@ -16,14 +16,12 @@ public static class SwaggerConfiguration
 			o.MinEndpointVersion = 1;
 			o.ShortSchemaNames = true;
 			o.DocumentSettings = s => {
-				s.Title = "API HR сервиса упрощения подбора";
+				s.Title = "Some api description";
 				s.Version = "v1";
 			};
 
 			o.TagDescriptions = t => {
-				t["Cve"] = "Операции с CVE";
-				t["Queue"] = "Очереди обработчиков";
-				t["Report"] = "Отчеты";
+				//t["Some"] = "Some controller name";
 			};
 
 			// if (securitySettings?.Static is not null && securitySettings.Static.IsEnabled && !string.IsNullOrEmpty(securitySettings.Static.HeaderName))

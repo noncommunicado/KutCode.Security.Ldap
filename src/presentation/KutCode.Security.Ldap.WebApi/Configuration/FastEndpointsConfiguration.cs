@@ -1,7 +1,8 @@
 ﻿using System.Globalization;
+using FastEndpoints;
 using FluentValidation;
 
-namespace KutCode.Cve.Api.Configuration;
+namespace KutCode.Security.Ldap.WebApi.Configuration;
 
 public static class FastEndpointsConfiguration
 {
@@ -9,9 +10,13 @@ public static class FastEndpointsConfiguration
 	{
 		webBuilder.Services.AddFastEndpoints(opts => { opts.IncludeAbstractValidators = true; });
 
-		// Set fluent validation error language to russian
-		ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("ru");
+		// Set fluent validation error language
+		var configCulture = webBuilder.Configuration.GetSection("Culture").Get<string>();
+		ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo(configCulture ?? "en-US");
 
+		webBuilder.Services.AddAuthentication();
+		webBuilder.Services.AddAuthorization();
+		
 		return webBuilder;
 	}
 }

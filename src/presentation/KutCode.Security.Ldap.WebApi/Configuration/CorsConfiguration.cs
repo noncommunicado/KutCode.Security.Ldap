@@ -1,10 +1,10 @@
 ﻿using KutCode.Cve.Api.Configuration.Models;
 
-namespace KutCode.Cve.Api.Configuration;
+namespace KutCode.Security.Ldap.WebApi.Configuration;
 
 public static class CorsConfiguration
 {
-	public const string CorsPolicyName = "HrApiCorsPolicy";
+	public const string CorsPolicyName = "ApiCorsPolicy";
 
 	public static WebApplicationBuilder ConfigureCors(this WebApplicationBuilder builder)
 	{
