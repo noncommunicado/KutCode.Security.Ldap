@@ -3,10 +3,11 @@ services:
         build:
             context: src/presentation/KutCode.Security.Ldap.WebApi
         ports: 
-            - 9051:80
+            - 9080:80
+            - 9443:443
         environment:
             ASPNETCORE_ENVIRONMENT: Production
-            ASPNETCORE_URLS: http://+:80
-            Culture: ru
+            ASPNETCORE_URLS: http://+:80,https://+:443
+            Culture: en
             Cors__Origins__0: localhost
-            Cors__Origins__1: anydomain.com
+            Cors__Origins__1: change-to-any-domain.com
