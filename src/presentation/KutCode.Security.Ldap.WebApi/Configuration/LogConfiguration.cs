@@ -13,13 +13,16 @@ public static class LogConfiguration
 			.MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
 			.Enrich.FromLogContext();
 
-#if DEBUG
+#if !DEBUG
 		loggerConfig.WriteTo.Logger(c => c.WriteTo.Console(LogEventLevel.Information));
 
 #else
-		loggerConfig.WriteTo.Logger(c => c.WriteTo.File(Path.Combine("logs", "_.log"),
+		loggerConfig
+			.WriteTo.Logger(c => c.WriteTo.File(Path.Combine("logs", "_.log"),
 				rollingInterval: RollingInterval.Day,
-				restrictedToMinimumLevel: LogEventLevel.Information));
+				restrictedToMinimumLevel: LogEventLevel.Information)
+			)
+			.WriteTo.Logger(c => c.WriteTo.Console(LogEventLevel.Information));
 #endif
 
 		Log.Logger = loggerConfig.CreateLogger();

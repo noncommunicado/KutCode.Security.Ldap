@@ -5,8 +5,11 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile(Path.Combine("appsettings","appsettings.json"), optional: false, reloadOnChange: true);
-builder.Configuration.AddJsonFile(Path.Combine("appsettings",$"appsettings.{builder.Environment.EnvironmentName}.json"), optional: true, reloadOnChange: true);
+builder.Configuration.AddJsonFile(Path.Combine("appsettings", "appsettings.json"), optional: false,
+	reloadOnChange: true);
+builder.Configuration.AddJsonFile(
+	Path.Combine("appsettings", $"appsettings.{builder.Environment.EnvironmentName}.json"), optional: true,
+	reloadOnChange: true);
 
 builder.AddFastEndpoints()
 	.ConfigureCors()
