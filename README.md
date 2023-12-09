@@ -24,8 +24,8 @@ cd ./src/presentation/KutCode.Security.Ldap.WebApi
 docker build -t ldap .
 docker run -d -p 8080:80 -v ./appsettings:/app/appsettings -v ./logs:/apt/logs -e ASPNETCORE_URLS=http://+:80 ldap
 ```
-#### Dcoker compose
-From the solution root director:
+#### Docker compose
+From the solution root directory:
 ```bash
 ls -la
 # be sure that docker-compose.yml is presented
