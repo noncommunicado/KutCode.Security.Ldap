@@ -30,14 +30,70 @@ From the solution root directory:
 ls -la
 # be sure that docker-compose.yml is presented
 docker compose up -d
-# if you docker has not 'compose' command, try write: docker-compose
+# if your docker hasn't 'compose' command, try: 'docker-compose'
 
-# uncomment 'image' section if you use network registry 
-  #image: registry.neftm.local/ldap
+# uncomment 'image' section if you use network registry  
+  #image: registry.neftm.local/ldap  
 
-# leave 'context' section if you use local solution files 
-  #build:
-    #context: src/presentation/KutCode.Security.Ldap.WebApi
+# leave 'context' section if you use local solution files  
+  #build:  
+    #context: src/presentation/KutCode.Security.Ldap.WebApi  
 ```
+`docker-compose.yml` file example:
+```bash 
+services: 
+    webapi:
+        #image: registry.domain.local/ldap
+        build:
+            # set path to source code project directory
+            context: src/presentation/KutCode.Security.Ldap.WebApi
+        ports: 
+            - 9080:80
+        environment:
+            ASPNETCORE_ENVIRONMENT: Production
+            ASPNETCORE_URLS: http://+:80
+        volumes:
+          - ./appsettings:/app/appsettings
+          - ./logs:/app/logs
+```
+
+#### Verify installation
 To check installation open in browser:  
 `http://localhost:[your port]/swagger`
+
+### Application settings configuration
+In application root `/appsettings` directory create `appsettings.json` file with following content:
+```json
+{
+  "Culture": "en",
+  "Ldap": {
+    "Server": "dc01.examplpe.local",
+    "ServerPort": 389,
+    "DomainName": "examplpe.local",
+    "BaseLdapFilter": "DC=examplpe,DC=local",
+    "AdditionalLdapFilter": "&(objectClass=user)(objectClass=person)",
+    "LoginAttribute": "sAMAccountName",
+    "DisplayNameAttribute": "displayName",
+    "UseSsl": false
+  },
+  "Cors": {
+    "Origins": [
+      "localhost", "some-one-else.com"
+    ]
+  }
+}
+```
+Here some information about this settings:
+- `Culture` - language of validation messages
+- `Ldap`
+  - `Server` - LDAP server name or ip-address
+  - `ServerPort` - LDAP server port, 389 is default non-ssl LDAP port 
+  - `DomainName` - Domain name of LDAP instance
+  - `BaseLdapFilter` - LDAP base filter for user search
+  - `AdditionalLdapFilter` - LDAP additional filter for user search
+  - `LoginAttribute` - LDAP login attribute
+  - `DisplayNameAttribute` - LDAP display name attribute
+  - `UseSsl` - Should LDAP connection use ssl
+- `Cors`
+  - `Origins` - list of allowed origins, use `localhost` by default,
+  and add some custom origins if application has access to browser url  
