@@ -1,19 +1,19 @@
 # KutCode.Security.Ldap
 
-## Info
+## ℹ️ Info
 Web API microservice with only one purpose:  
 Make LDAP auth integration simplier.
 
-## License
+## 🧑‍⚖️ License
 Please read the simple [MIT license](./LICENSE).
 
-## Stack
+## 📜 Stack
 - Dotnet 8
 - FastEndpoints
 - Swagger
 - Docker
 
-## Installation
+## 📦 Installation
 Use `docker compose` to setup container ease.  
 Shure, you can produce manual installation with dotnet-runtime.
 
@@ -63,7 +63,7 @@ To check installation open in browser:
 
 
 
-## Configuration
+## ⚙️ Configuration
 ### Application settings configuration
 In application root `/appsettings` directory create `appsettings.json` file with following content:
 ```json
@@ -100,3 +100,39 @@ Here some information about this settings:
 - `Cors`
   - `Origins` - list of allowed origins, use `localhost` by default,
   and add some custom origins if application has access to browser url  
+
+## 🏃‍♂️ Usage
+
+After launching the application, you can access the web api from the browser using `Swagger UI`:  
+`http://localhost:[your port]/swagger`
+
+Here is some methods description:
+- GET: `/api/v1/ping` - check if service is up
+- POST: `/api/v1/auth` - authenticate user with LDAP by login/password
+
+### POST `/api/v1/auth` schemes
+JSON request body:
+```json
+{
+  "login": "example_user", // user Domain login
+  "password": "example_password" // user Domain password
+}
+```
+JSON response:
+```json
+{
+  "status": "OK",
+  "code": 200,
+  "value": {
+    "authorized": true, // is user authorized success
+    "userData": {
+      "userId": "1.3.3.2.2.1.4554.1.22.3", // LDAP unique identity
+      "userDistinguishedName": "CN=Example User,OU=Some group,OU=Users,DC=somedomain,DC=local",
+      "userDisplayName": "Example User",
+      "memberOfGroups": [ // the name of the groups that the user is a member of
+        "some_groups"
+      ]
+    }
+  }
+}
+```

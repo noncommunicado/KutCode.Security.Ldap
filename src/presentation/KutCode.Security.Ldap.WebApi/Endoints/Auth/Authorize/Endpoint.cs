@@ -11,7 +11,7 @@ public sealed class Endpoint : Endpoint<Request, HttpResponseBase<LdapAuthentica
 	{
 		AllowAnonymous();
 		Version(1);
-		Get("auth");
+		Post("auth");
 	}
 
 	public override async Task<HttpResponseBase<LdapAuthentication>> ExecuteAsync(Request req, CancellationToken ct)
