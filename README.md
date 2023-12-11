@@ -61,6 +61,9 @@ services:
 To check installation open in browser:  
 `http://localhost:[your port]/swagger`
 
+
+
+## Configuration
 ### Application settings configuration
 In application root `/appsettings` directory create `appsettings.json` file with following content:
 ```json
