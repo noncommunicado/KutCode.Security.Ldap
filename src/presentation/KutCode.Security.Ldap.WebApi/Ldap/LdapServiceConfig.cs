@@ -10,5 +10,6 @@ public sealed record LdapServiceConfig
 	public string AdditionalLdapFilter { get; set; }
 	public string LoginAttribute { get; set; }
 	public string DisplayNameAttribute { get; set; }
+	public string EmailAttribute { get; set; }
 	public bool UseSsl { get; set; }
 }

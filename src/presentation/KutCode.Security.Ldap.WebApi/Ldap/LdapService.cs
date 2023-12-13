@@ -28,6 +28,8 @@ public sealed class LdapService
 			UserId = me.Id
 		});
 		LdapMessage responseMessage;
+		var displayNameAttributeNormalized = _ldapOptions.Value.DisplayNameAttribute.Trim().ToLower();
+		var emailAttributeNormalized = _ldapOptions.Value.EmailAttribute.Trim().ToLower();
 		while ((responseMessage = queue.GetResponse()) != null) {
 			if (responseMessage is LdapSearchResult sRes) {
 				var entry = sRes.Entry;
@@ -38,12 +40,19 @@ public sealed class LdapService
 				foreach (var groupLdapPath in groups.StringValueArray)
 					result.UserData.Value.MemberOfGroups.Add(GetFriendlyName(groupLdapPath));
 
-				var displayNameAttributeNormalized = _ldapOptions.Value.DisplayNameAttribute.Trim().ToLower();
+				// get display name
 				if (attrs.Any(x => x.Key.ToLower() == displayNameAttributeNormalized))
 				{
 					var displayNameAttrValue = attrs.FirstOrDefault(x => x.Key.ToLower() == displayNameAttributeNormalized).Value;
 					if (displayNameAttrValue is not null)
 						result.UserData.Value!.UserDisplayName ??= displayNameAttrValue.StringValue;
+				}
+				// get email
+				if (attrs.Any(x => x.Key.ToLower() == emailAttributeNormalized))
+				{
+					var attrValue = attrs.FirstOrDefault(x => x.Key.ToLower() == emailAttributeNormalized).Value;
+					if (attrValue is not null)
+						result.UserData.Value!.UserEmail ??= attrValue.StringValue;
 				}
 			}
 		}

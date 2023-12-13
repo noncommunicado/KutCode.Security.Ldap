@@ -96,6 +96,7 @@ Here some information about this settings:
   - `AdditionalLdapFilter` - LDAP additional filter for user search
   - `LoginAttribute` - LDAP login attribute
   - `DisplayNameAttribute` - LDAP display name attribute
+  - `EmailAttribute` - LDAP email attribute
   - `UseSsl` - Should LDAP connection use ssl
 - `Cors`
   - `Origins` - list of allowed origins, use `localhost` by default,
