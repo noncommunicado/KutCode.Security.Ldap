@@ -8,6 +8,10 @@ RUN dotnet publish -c Release -o /publish
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 as runtime
 WORKDIR /app
 COPY --from=build /publish /app
+
+VOLUME ./appsettings ./app/appsettings
+VOLUME ./logs ./app/logs
+
 EXPOSE 80
 EXPOSE 443
 ENTRYPOINT ["dotnet", "/app/KutCode.Security.Ldap.WebApi.dll"]
