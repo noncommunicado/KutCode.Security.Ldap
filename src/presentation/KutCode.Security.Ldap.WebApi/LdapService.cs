@@ -1,7 +1,9 @@
+using KutCode.Security.Ldap.Http;
+using KutCode.Security.Ldap.Models;
 using Microsoft.Extensions.Options;
 using Novell.Directory.Ldap;
 
-namespace KutCode.Security.Ldap.WebApi.Ldap;
+namespace KutCode.Security.Ldap.WebApi;
 
 public sealed class LdapService
 {
@@ -11,20 +13,20 @@ public sealed class LdapService
 		_ldapOptions = ldapOptions;
 	}
 
-	public LdapAuthentication Authenticate(string login, string password)
+	public LdapAuthenticationResponse Authenticate(string login, string password)
 	{
 		using var ldap = GetConnection();
 		try {
 			ldap.Bind(GetUsernameForAuthentication(login), password);
 		}
 		catch { // if failed to auth -> credentials incorrect
-			return new LdapAuthentication(false);
+			return new LdapAuthenticationResponse(false);
 		}
 		var filter = GetLdapFilter(_ldapOptions.Value.AdditionalLdapFilter, _ldapOptions.Value.LoginAttribute, login);
 		var queue = ldap.Search(_ldapOptions.Value.BaseLdapFilter, LdapConnection.ScopeSub, filter, new string[] {}, false, null, null);
 
 		var me = ldap.WhoAmI();
-		LdapAuthentication result = new(true, new LdapUserData {
+		LdapAuthenticationResponse result = new(true, new LdapUserData {
 			UserId = me.Id
 		});
 		LdapMessage responseMessage;

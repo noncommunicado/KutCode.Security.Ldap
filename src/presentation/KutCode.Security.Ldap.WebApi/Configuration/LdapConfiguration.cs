@@ -1,5 +1,5 @@
 
-using KutCode.Security.Ldap.WebApi.Ldap;
+using KutCode.Security.Ldap.Models;
 
 namespace KutCode.Security.Ldap.WebApi.Configuration;
 

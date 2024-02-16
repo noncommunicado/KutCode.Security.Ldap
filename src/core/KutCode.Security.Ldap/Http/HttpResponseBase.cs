@@ -1,5 +1,5 @@
 
-namespace KutCode.Security.Ldap.WebApi.Http;
+namespace KutCode.Security.Ldap.Http;
 
 public sealed class HttpResponseBase<T>
 {
@@ -13,5 +13,5 @@ public sealed class HttpResponseBase<T>
 	public int Code { get; set; }
 	public T Value { get; set; }
 
-	public static HttpResponseBase<T> FromOK(T item) => new HttpResponseBase<T>(item);
+	public static HttpResponseBase<T> FromOK(T item) => new(item);
 }

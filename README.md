@@ -13,6 +13,11 @@ Please read the simple [MIT license](./LICENSE).
 - Swagger
 - Docker
 
+## 🎁 Packages
+Use below packages for client integration with service API
+- [KutCode.Security.Ldap](https://www.nuget.org/packages/KutCode.Security.Ldap)
+- [KutCode.Security.Ldap.DependencyInjection](https://www.nuget.org/packages/KutCode.Security.Ldap.DependencyInjection)
+
 ## 📦 Installation
 Use `docker compose` to setup container ease.  
 Shure, you can produce manual installation with dotnet-runtime.
@@ -135,5 +140,25 @@ JSON response:
       ]
     }
   }
+}
+```
+TypeScript model:
+```ts
+export interface LdapAuthResponse {
+  status: string
+  code: number
+  value: AuthResult | null
+}
+
+export interface AuthResult {
+  authorized: boolean
+  userData: UserData
+}
+
+export interface UserData {
+  userId: string
+  userDistinguishedName: string
+  userDisplayName: string
+  memberOfGroups: string[]
 }
 ```

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.1.0</Version>
+        <Title>KutCode.Security.Ldap</Title>
+        <Description>Base KutCode.Ldap model and API repository for KutCode.Security.Ldap.WebApi service </Description>
+        <Copyright>Kutumov Nikita</Copyright>
+        <PackageProjectUrl>https://github.com/hamaronooo/KutCode.Security.Ldap</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/hamaronooo/KutCode.Security.Ldap/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/hamaronooo/KutCode.Security.Ldap/blob/master/LICENSE</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="KutCode.Optionality" Version="0.0.4" />
+    </ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 
-namespace KutCode.Security.Ldap.WebApi.Ldap;
+namespace KutCode.Security.Ldap.Models;
 
-public sealed record LdapServiceConfig
+public sealed class LdapServiceConfig
 {
 	public string Server { get; set; }
 	public int ServerPort { get; set; }

@@ -1,10 +1,9 @@
 using FastEndpoints;
-using KutCode.Security.Ldap.WebApi.Http;
-using KutCode.Security.Ldap.WebApi.Ldap;
+using KutCode.Security.Ldap.Http;
 
 namespace KutCode.Security.Ldap.WebApi.Endoints.Auth.Authorize;
 
-public sealed class Endpoint : Endpoint<Request, HttpResponseBase<LdapAuthentication>>
+public sealed class Endpoint : Endpoint<LdapLoginRequest, HttpResponseBase<LdapAuthenticationResponse>>
 {
 	public LdapService LdapService { get; set; }
 	public override void Configure()
@@ -14,10 +13,10 @@ public sealed class Endpoint : Endpoint<Request, HttpResponseBase<LdapAuthentica
 		Post("auth");
 	}
 
-	public override async Task<HttpResponseBase<LdapAuthentication>> ExecuteAsync(Request req, CancellationToken ct)
+	public override async Task<HttpResponseBase<LdapAuthenticationResponse>> ExecuteAsync(LdapLoginRequest req, CancellationToken ct)
 	{
 		ThrowIfAnyErrors();
 		var response = await Task.Run(() => LdapService.Authenticate(req.Login, req.Password), ct);
-		return HttpResponseBase<LdapAuthentication>.FromOK(response);
+		return HttpResponseBase<LdapAuthenticationResponse>.FromOK(response);
 	}
 }

@@ -2,6 +2,22 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutCode.Security.Ldap.WebApi", "src\presentation\KutCode.Security.Ldap.WebApi\KutCode.Security.Ldap.WebApi.csproj", "{B8E8CC2A-3EB8-4CAD-AE43-E1197AC075D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutCode.Security.Ldap", "src\core\KutCode.Security.Ldap\KutCode.Security.Ldap.csproj", "{69573905-B7B9-41A9-AE60-AED851A879FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{C6AEDAF2-DCBA-4B32-95B7-7C4C93117465}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{46D5E915-D64B-4554-BA1C-40169ED4B3DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{C9C61D4D-4B5B-413E-A487-5FADBFD3D119}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutCode.Security.Ldap.DependencyInjection", "src\packages\KutCode.Security.Ldap.DependencyInjection\KutCode.Security.Ldap.DependencyInjection.csproj", "{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{C783DF6B-EC3B-400B-82B4-59EDDA5540DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutCode.Security.Ldap.ConsoleExample", "examples\KutCode.Security.Ldap.ConsoleExample\KutCode.Security.Ldap.ConsoleExample.csproj", "{7B27D527-BE37-4481-9C18-AA899818B18C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutCode.Security.Ldap.DiExample", "examples\KutCode.Security.Ldap.DiExample\KutCode.Security.Ldap.DiExample.csproj", "{DFF2F117-69F3-41A3-A030-A0D8A7960EFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +28,28 @@ Global
 		{B8E8CC2A-3EB8-4CAD-AE43-E1197AC075D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8E8CC2A-3EB8-4CAD-AE43-E1197AC075D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8E8CC2A-3EB8-4CAD-AE43-E1197AC075D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69573905-B7B9-41A9-AE60-AED851A879FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69573905-B7B9-41A9-AE60-AED851A879FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69573905-B7B9-41A9-AE60-AED851A879FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69573905-B7B9-41A9-AE60-AED851A879FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B27D527-BE37-4481-9C18-AA899818B18C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B27D527-BE37-4481-9C18-AA899818B18C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B27D527-BE37-4481-9C18-AA899818B18C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B27D527-BE37-4481-9C18-AA899818B18C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF2F117-69F3-41A3-A030-A0D8A7960EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF2F117-69F3-41A3-A030-A0D8A7960EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF2F117-69F3-41A3-A030-A0D8A7960EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF2F117-69F3-41A3-A030-A0D8A7960EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69573905-B7B9-41A9-AE60-AED851A879FF} = {C6AEDAF2-DCBA-4B32-95B7-7C4C93117465}
+		{B8E8CC2A-3EB8-4CAD-AE43-E1197AC075D5} = {46D5E915-D64B-4554-BA1C-40169ED4B3DF}
+		{BC5CF3F1-1A91-4BD2-B230-CD20EC6A64DC} = {C9C61D4D-4B5B-413E-A487-5FADBFD3D119}
+		{7B27D527-BE37-4481-9C18-AA899818B18C} = {C783DF6B-EC3B-400B-82B4-59EDDA5540DF}
+		{DFF2F117-69F3-41A3-A030-A0D8A7960EFC} = {C783DF6B-EC3B-400B-82B4-59EDDA5540DF}
 	EndGlobalSection
 EndGlobal
