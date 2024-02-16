@@ -36,5 +36,7 @@ app.UseFastEndpoints(c => {
 });
 app.UseSwaggerGen();
 
+app.UseHttpRequestsLogging();
+
 Log.Information("! APPLICATION START !");
 await app.RunAsync();

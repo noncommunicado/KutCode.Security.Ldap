@@ -19,3 +19,12 @@ var config = builder.Configuration.GetRequiredSection("Ldap");
 builder.Services
 	.AddKutCodeLdapRepository(config, ServiceLifetime.Scoped);
 ```
+
+appsettings.json example: 
+```json
+{
+  "LdapSecurity": {
+    "BaseUrl": "http://localhost:9080"
+  }
+}
+```

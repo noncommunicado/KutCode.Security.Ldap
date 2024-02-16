@@ -15,7 +15,7 @@ public class KutCodeLdapRepository : IKutCodeLdapRepository
 		message.Content = JsonContent.Create(request);
 		HttpResponseMessage responseRaw = await Client.SendAsync(message, ct);
 		if (responseRaw.IsSuccessStatusCode is false)
-			return new LdapAuthenticationResponse(false);
+			return new LdapAuthenticationResponse{Authorized = false};
 		var responseModel = await responseRaw.Content.ReadFromJsonAsync<HttpResponseBase<LdapAuthenticationResponse>>(ct);
 		return responseModel!.Value;
 	}

@@ -2,6 +2,7 @@ using KutCode.Security.Ldap.Http;
 using KutCode.Security.Ldap.Models;
 using Microsoft.Extensions.Options;
 using Novell.Directory.Ldap;
+using Serilog;
 
 namespace KutCode.Security.Ldap.WebApi;
 
@@ -20,7 +21,8 @@ public sealed class LdapService
 			ldap.Bind(GetUsernameForAuthentication(login), password);
 		}
 		catch { // if failed to auth -> credentials incorrect
-			return new LdapAuthenticationResponse(false);
+			Log.Error("Failed to authorize in {LdapServer}:{Port}", _ldapOptions.Value.Server, _ldapOptions.Value.ServerPort);
+			return new LdapAuthenticationResponse {Authorized = false };
 		}
 		var filter = GetLdapFilter(_ldapOptions.Value.AdditionalLdapFilter, _ldapOptions.Value.LoginAttribute, login);
 		var queue = ldap.Search(_ldapOptions.Value.BaseLdapFilter, LdapConnection.ScopeSub, filter, new string[] {}, false, null, null);
@@ -36,25 +38,25 @@ public sealed class LdapService
 			if (responseMessage is LdapSearchResult sRes) {
 				var entry = sRes.Entry;
 				var attrs = entry.GetAttributeSet();
-				result.UserData.Value!.UserDistinguishedName ??= attrs.FirstOrDefault(x => x.Key.ToLower() == "distinguishedname").Value.StringValue;
+				result.UserData!.UserDistinguishedName ??= attrs.FirstOrDefault(x => x.Key.ToLower() == "distinguishedname").Value.StringValue;
 				
 				var groups = attrs.FirstOrDefault(x => x.Key.ToLower() == "memberof").Value;
 				foreach (var groupLdapPath in groups.StringValueArray)
-					result.UserData.Value.MemberOfGroups.Add(GetFriendlyName(groupLdapPath));
+					result.UserData.MemberOfGroups.Add(GetFriendlyName(groupLdapPath));
 
 				// get display name
 				if (attrs.Any(x => x.Key.ToLower() == displayNameAttributeNormalized))
 				{
 					var displayNameAttrValue = attrs.FirstOrDefault(x => x.Key.ToLower() == displayNameAttributeNormalized).Value;
 					if (displayNameAttrValue is not null)
-						result.UserData.Value!.UserDisplayName ??= displayNameAttrValue.StringValue;
+						result.UserData!.UserDisplayName ??= displayNameAttrValue.StringValue;
 				}
 				// get email
 				if (attrs.Any(x => x.Key.ToLower() == emailAttributeNormalized))
 				{
 					var attrValue = attrs.FirstOrDefault(x => x.Key.ToLower() == emailAttributeNormalized).Value;
 					if (attrValue is not null)
-						result.UserData.Value!.UserEmail ??= attrValue.StringValue;
+						result.UserData!.UserEmail ??= attrValue.StringValue;
 				}
 			}
 		}

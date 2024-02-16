@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>12</LangVersion>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,7 +22,6 @@
       <PackageReference Include="FastEndpoints.Messaging.Core" Version="5.22.0" />
       <PackageReference Include="FastEndpoints.Security" Version="5.22.0" />
       <PackageReference Include="FastEndpoints.Swagger" Version="5.22.0" />
-      <PackageReference Include="KutCode.Optionality" Version="0.0.4" />
       <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
       <PackageReference Include="Serilog" Version="3.1.1" />
       <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
