@@ -1,7 +1,7 @@
 
 namespace KutCode.Security.Ldap.Http;
 
-public sealed class LdapLoginRequest
+public class LdapLoginRequest
 {
 	public LdapLoginRequest() { }
 

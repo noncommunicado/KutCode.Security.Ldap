@@ -24,7 +24,30 @@ appsettings.json example:
 ```json
 {
   "LdapSecurity": {
-    "BaseUrl": "http://localhost:9080"
+    "BaseUrl": "http://localhost:9080",
+    "RpcBaseUrl": "http://localhost:11080"
   }
 }
+```
+
+## gRPC 
+If you want ot use gRPC to call Ldap security api:
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapKutCodeLdapRpc(new LdapRepositoryInjectionConfiguration {
+    BaseUrl = "http://localhost:9080",
+    RpcBaseUrl = "http://localhost:9081"
+    // You can use the same port for gRPC only if connection is TLS secured!
+    // That's because HTTPv2 and HTTPv1 on the same port require TLS.
+});
+	
+app.Run();
+```
+And than in any place of your code use: 
+```csharp
+var response = await new LdapAuthCommand {
+		Login = "test", Password = "test"
+	}.RemoteExecuteAsync();
 ```

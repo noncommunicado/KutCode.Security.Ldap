@@ -1,4 +1,4 @@
-﻿using KutCode.Cve.Api.Configuration.Models;
+﻿using KutCode.Security.Ldap.WebApi.Configuration.Models;
 
 namespace KutCode.Security.Ldap.WebApi.Configuration;
 

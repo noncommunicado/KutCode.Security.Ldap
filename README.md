@@ -56,7 +56,7 @@ services:
             - 9080:80
         environment:
             ASPNETCORE_ENVIRONMENT: Production
-            ASPNETCORE_URLS: http://+:80
+            ListenPort: 80 ## not required
         volumes:
           - ./appsettings:/app/appsettings
           - ./logs:/app/logs
@@ -74,6 +74,7 @@ In application root `/appsettings` directory create `appsettings.json` file with
 ```json
 {
   "Culture": "en",
+  "ListenPort": 80,
   "Ldap": {
     "Server": "dc01.examplpe.local",
     "ServerPort": 389,
@@ -84,6 +85,11 @@ In application root `/appsettings` directory create `appsettings.json` file with
     "DisplayNameAttribute": "displayName",
     "UseSsl": false
   },
+  "Rpc":{
+    "Enabled": false,
+    "Port": 9081,
+    "Secure": false
+  },
   "Cors": {
     "Origins": [
       "localhost", "some-one-else.com"
@@ -93,6 +99,7 @@ In application root `/appsettings` directory create `appsettings.json` file with
 ```
 Here some information about this settings:
 - `Culture` - language of validation messages
+- `ListenPort` - port to listen on, for webApi only
 - `Ldap`
   - `Server` - LDAP server name or ip-address
   - `ServerPort` - LDAP server port, 389 is default non-ssl LDAP port 
@@ -103,6 +110,10 @@ Here some information about this settings:
   - `DisplayNameAttribute` - LDAP display name attribute
   - `EmailAttribute` - LDAP email attribute
   - `UseSsl` - Should LDAP connection use ssl
+- `Rpc` - gRPC settings
+  - `Enabled` - will application accept gRPC connections
+  - `Port` - port for HTTP2 connections (cause gRPC works on HTTP2), do not set same port that Web-API use if connections will be not secured with TLS
+  - `Secure` - does application will accept secured connections (allows to use HTTP API and gRPC on the same port)
 - `Cors`
   - `Origins` - list of allowed origins, use `localhost` by default,
   and add some custom origins if application has access to browser url  

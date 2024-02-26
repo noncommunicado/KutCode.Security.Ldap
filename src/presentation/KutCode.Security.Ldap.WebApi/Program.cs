@@ -1,6 +1,11 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using KutCode.Security.Ldap.Http;
+using KutCode.Security.Ldap.Rpc;
 using KutCode.Security.Ldap.WebApi.Configuration;
+using KutCode.Security.Ldap.WebApi.Configuration.Models;
+using KutCode.Security.Ldap.WebApi.Rpc.Handlers;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,9 +39,16 @@ app.UseFastEndpoints(c => {
 	c.Versioning.PrependToRoute = true;
 	//c.Serializer.Options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
-app.UseSwaggerGen();
 
+
+{ // rpc
+	var rpcConfigService = app.Services.GetService<RpcConfigDto>();
+	if (rpcConfigService is not null && rpcConfigService.Enabled) {
+		app.MapHandlers(h => { h.Register<LdapAuthCommand, AuthHandler, LdapAuthenticationResponse>(); });
+	}
+}
+
+app.UseSwaggerGen();
 app.UseHttpRequestsLogging();
 
-Log.Information("! APPLICATION START !");
 await app.RunAsync();
