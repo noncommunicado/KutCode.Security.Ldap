@@ -5,19 +5,19 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.5.0</Version>
+        <Version>1.5.10</Version>
         <Title>KutCode.Security.Ldap</Title>
         <Description>Base KutCode.Ldap model and API repository for KutCode.Security.Ldap.WebApi service </Description>
         <Copyright>Kutumov Nikita</Copyright>
         <PackageProjectUrl>https://github.com/hamaronooo/KutCode.Security.Ldap</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/hamaronooo/KutCode.Security.Ldap/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/hamaronooo/KutCode.Security.Ldap/blob/master/LICENSE</RepositoryUrl>
-        <AssemblyVersion>1.5.0</AssemblyVersion>
-        <FileVersion>1.5.0</FileVersion>
+        <AssemblyVersion>1.5.10</AssemblyVersion>
+        <FileVersion>1.5.10</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FastEndpoints.Messaging.Core" Version="5.22.0" />
+      <PackageReference Include="FastEndpoints.Messaging.Core" Version="5.30.0" />
     </ItemGroup>
 
 </Project>

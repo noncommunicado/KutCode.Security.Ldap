@@ -3,12 +3,12 @@ using KutCode.Security.Ldap.Http;
 using KutCode.Security.Ldap.Rpc;
 using Serilog;
 
-namespace KutCode.Security.Ldap.WebApi.Rpc.Handlers;
+namespace KutCode.Security.Ldap.WebApi.Rpc.Auth;
 
-public sealed class AuthHandler : ICommandHandler<LdapAuthCommand, LdapAuthenticationResponse>
+public sealed class RpcAuthHandler : ICommandHandler<LdapAuthCommand, LdapAuthenticationResponse>
 {
 	private readonly LdapService _ldapService;
-	public AuthHandler(LdapService ldapService)
+	public RpcAuthHandler(LdapService ldapService)
 	{
 		_ldapService = ldapService;
 	}

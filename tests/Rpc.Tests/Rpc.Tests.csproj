@@ -7,11 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FastEndpoints.Messaging.Remote" Version="5.22.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\src\core\KutCode.Security.Ldap\KutCode.Security.Ldap.csproj" />
+      <ProjectReference Include="..\..\src\packages\KutCode.Security.Ldap.DependencyInjection\KutCode.Security.Ldap.DependencyInjection.csproj" />
     </ItemGroup>
 
 </Project>

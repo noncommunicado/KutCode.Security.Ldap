@@ -7,17 +7,19 @@ using KutCode.Security.Ldap.Rpc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace KutCode.Security.Ldap.DependencyInjection;
 
 public static class DependencyInjection
 {
 	public static IServiceCollection AddKutCodeLdapRepository(
-		this IServiceCollection services, 
-		IConfigurationSection configurationSection, 
+		this IServiceCollection services,
+		IConfigurationSection configurationSection,
 		ServiceLifetime lifetimeType)
 	{
 		var configuration = configurationSection.Get<LdapRepositoryInjectionConfiguration>()!;
+		services.Configure<LdapRepositoryInjectionConfiguration>(configurationSection);
 		return AddKutCodeLdapRepository(services, configuration, lifetimeType);
 	}
 	public static IServiceCollection AddKutCodeLdapRepository(
@@ -36,15 +38,25 @@ public static class DependencyInjection
 		return services;
 	}
 	
-	public static WebApplication MapKutCodeLdapRpc(this WebApplication app, IConfigurationSection configurationSection)
+	/// <summary>
+	/// Use this method to configure RPC calls to LDAP service. <br/> 
+	/// Settings, configured in <see cref="AddKutCodeLdapRepository"/> method, will be used there (like <see cref="RpcBaseUrl">RpcBaseUrl</see> option).
+	/// </summary>
+	public static WebApplication MapKutCodeLdapRpc(this WebApplication app)
 	{
-		var configuration = configurationSection.Get<LdapRepositoryInjectionConfiguration>()!;
-		return MapKutCodeLdapRpc(app, configuration);
+		var configuration = app.Services.GetRequiredService<IOptions<LdapRepositoryInjectionConfiguration>>().Value;
+		return MapKutCodeLdapRpc(app, configuration.RpcBaseUrl);
 	}
-	public static WebApplication MapKutCodeLdapRpc(this WebApplication app, LdapRepositoryInjectionConfiguration configuration)
+	
+	/// <summary>
+	/// Use this method to configure RPC calls to LDAP service. <br/> 
+	/// Rewrites preconfigured in <see cref="AddKutCodeLdapRepository"/> method RpcBaseUrl setting string.
+	/// </summary>
+	public static WebApplication MapKutCodeLdapRpc(this WebApplication app, string? rpcBaseUrl)
 	{
-		if (string.IsNullOrEmpty(configuration.RpcBaseUrl)) throw new ArgumentException($"Configuration url for {nameof(configuration.RpcBaseUrl)} is null or empty");
-		app.MapRemote(configuration.RpcBaseUrl, c => {
+		if (string.IsNullOrEmpty(rpcBaseUrl)) 
+			throw new ArgumentException($"Configuration url for {nameof(rpcBaseUrl)} is null or empty");
+		app.MapRemote(rpcBaseUrl, c => {
 			c.Register<LdapAuthCommand, LdapAuthenticationResponse>();
 		});
 		return app;

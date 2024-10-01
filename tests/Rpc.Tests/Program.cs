@@ -1,21 +1,18 @@
 using FastEndpoints;
-using KutCode.Security.Ldap.Http;
+using KutCode.Security.Ldap.DependencyInjection;
 using KutCode.Security.Ldap.Rpc;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var app = builder.Build();
 
-app.MapRemote("http://ldap.nginx3.neftm.local:9080", c => {
-	c.Register<LdapAuthCommand, LdapAuthenticationResponse>();
-});
-
+app.MapKutCodeLdapRpc("http://localhost:9081");
 Task.Run(async () => {
-	await Task.Delay(100);
-	var response = await new LdapAuthCommand {
-		Login = "test", Password = "test"
-	}.RemoteExecuteAsync();
+	await Task.Delay(300);
+	var response = await new LdapAuthCommand("kutumov.n", "Borrow1488")
+		.RemoteExecuteAsync();
 	Console.Out.WriteLine(response.Authorized);
 	Console.Out.WriteLine(response.UserData?.UserDisplayName);
 });
 	
-app.Run();
+await app.RunAsync();
