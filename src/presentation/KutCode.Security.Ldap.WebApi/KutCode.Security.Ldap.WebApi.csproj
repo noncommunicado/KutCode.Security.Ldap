@@ -17,19 +17,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="FastEndpoints" Version="5.22.0" />
-      <PackageReference Include="FastEndpoints.Attributes" Version="5.22.0" />
-      <PackageReference Include="FastEndpoints.Messaging.Core" Version="5.22.0" />
-      <PackageReference Include="FastEndpoints.Security" Version="5.22.0" />
-      <PackageReference Include="FastEndpoints.Swagger" Version="5.22.0" />
-      <PackageReference Include="FastEndpoints.Messaging.Remote" Version="5.*" />
+      <PackageReference Include="FastEndpoints" Version="5.30.0" />
+      <PackageReference Include="FastEndpoints.Attributes" Version="5.30.0" />
+      <PackageReference Include="FastEndpoints.Messaging.Core" Version="5.30.0" />
+      <PackageReference Include="FastEndpoints.Security" Version="5.30.0" />
+      <PackageReference Include="FastEndpoints.Swagger" Version="5.30.0" />
+      <PackageReference Include="FastEndpoints.Messaging.Remote" Version="5.30.0" />
+      <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.66.0" />
       <PackageReference Include="Novell.Directory.Ldap.NETStandard" Version="3.6.0" />
-      <PackageReference Include="Serilog" Version="3.1.1" />
-      <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
-      <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
-      <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
-      <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-      <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+      <PackageReference Include="Serilog" Version="4.0.2" />
+      <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
+      <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.2" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+      <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+      <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>

@@ -45,6 +45,7 @@ app.UseFastEndpoints(c => {
 	var rpcConfigService = app.Services.GetService<RpcConfigDto>();
 	if (rpcConfigService is not null && rpcConfigService.Enabled) {
 		app.MapHandlers(h => { h.Register<LdapAuthCommand, AuthHandler, LdapAuthenticationResponse>(); });
+		app.MapGrpcReflectionService();
 	}
 }
 

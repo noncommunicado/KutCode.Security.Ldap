@@ -46,6 +46,7 @@ public static class FastEndpointsConfiguration
 			}
 		});
 
+		bldr.Services.AddGrpcReflection();
 		return bldr;
 	}
 }
