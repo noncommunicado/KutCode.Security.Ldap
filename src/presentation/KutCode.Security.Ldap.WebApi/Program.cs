@@ -1,7 +1,11 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using KutCode.Security.Ldap.Http;
+using KutCode.Security.Ldap.Models;
+using KutCode.Security.Ldap.Rpc;
 using KutCode.Security.Ldap.WebApi.Configuration;
-using Serilog;
+using KutCode.Security.Ldap.WebApi.Configuration.Models;
+using KutCode.Security.Ldap.WebApi.Rpc.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +24,6 @@ builder.AddFastEndpoints()
 var app = builder.Build();
 
 app.UseRequestLocalization();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -32,11 +35,21 @@ app.UseFastEndpoints(c => {
 	c.Endpoints.RoutePrefix = "api";
 	c.Versioning.Prefix = "v";
 	c.Versioning.PrependToRoute = true;
-	//c.Serializer.Options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
-app.UseSwaggerGen();
 
+
+{ // rpc
+	var rpcConfigService = app.Services.GetService<RpcConfigDto>();
+	if (rpcConfigService is not null && rpcConfigService.Enabled) {
+		app.MapHandlers(h => {
+			h.Register<LdapAuthCommand, RpcAuthHandler, LdapAuthenticationResponse>(); 
+			h.Register<LdapGetUserListCommand, RpcUserListHandler, List<LdapUserData>>();
+		});
+		app.MapGrpcReflectionService();
+	}
+}
+
+app.UseSwaggerGen();
 app.UseHttpRequestsLogging();
 
-Log.Information("! APPLICATION START !");
 await app.RunAsync();

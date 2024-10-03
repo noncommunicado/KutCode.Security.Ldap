@@ -9,8 +9,7 @@ services:
             - 9443:443
         environment:
             ASPNETCORE_ENVIRONMENT: Production
-            ASPNETCORE_URLS: http://+:80
-            #ASPNETCORE_URLS: http://+:80;https://+:443
+            ListenPort: 9088
         volumes:
           - ./appsettings:/app/appsettings
           - ./logs:/app/logs

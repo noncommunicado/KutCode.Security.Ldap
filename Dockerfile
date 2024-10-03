@@ -11,6 +11,7 @@ COPY --from=build /src/publish /app
 
 VOLUME ./appsettings ./app/appsettings
 VOLUME ./logs ./app/logs
+RUN apt-get update && apt-get install --upgrade -y libldap-2.5.0 && ln -s /usr/lib/x86_64-linux-gnu/libldap.so.2 /usr/lib/libldap-2.5.so.0
 
 EXPOSE 80
 EXPOSE 443

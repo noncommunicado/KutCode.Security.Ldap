@@ -1,9 +1,8 @@
-using KutCode.Optionality;
 using KutCode.Security.Ldap.Models;
 
 namespace KutCode.Security.Ldap.Http;
 
-public sealed class LdapAuthenticationResponse
+public class LdapAuthenticationResponse
 {
 	public LdapAuthenticationResponse() { }
 	public LdapAuthenticationResponse(bool authorized, LdapUserData userData)

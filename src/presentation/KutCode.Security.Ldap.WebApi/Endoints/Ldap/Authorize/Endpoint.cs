@@ -1,8 +1,9 @@
 using FastEndpoints;
 using KutCode.Security.Ldap.Http;
+using KutCode.Security.Ldap.WebApi.Services.Ldap;
 using Serilog;
 
-namespace KutCode.Security.Ldap.WebApi.Endoints.Auth.Authorize;
+namespace KutCode.Security.Ldap.WebApi.Endoints.Ldap.Authorize;
 
 public sealed class Endpoint : Endpoint<LdapLoginRequest, HttpResponseBase<LdapAuthenticationResponse>>
 {
@@ -12,6 +13,9 @@ public sealed class Endpoint : Endpoint<LdapLoginRequest, HttpResponseBase<LdapA
 		AllowAnonymous();
 		Version(1);
 		Post("auth");
+		Summary(s => {
+			s.Summary = "Try authenticate in domain and get user domain groups";
+		});
 	}
 
 	public override async Task<HttpResponseBase<LdapAuthenticationResponse>> ExecuteAsync(LdapLoginRequest req, CancellationToken ct)
