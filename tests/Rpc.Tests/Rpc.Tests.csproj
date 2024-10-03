@@ -11,4 +11,10 @@
       <ProjectReference Include="..\..\src\packages\KutCode.Security.Ldap.DependencyInjection\KutCode.Security.Ldap.DependencyInjection.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="appsettings.Development.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

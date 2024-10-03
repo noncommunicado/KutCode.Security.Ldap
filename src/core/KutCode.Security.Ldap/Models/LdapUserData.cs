@@ -7,4 +7,9 @@ public sealed class LdapUserData
 	public string UserDisplayName { get; set; }
 	public string UserEmail { get; set; }
 	public List<string> MemberOfGroups { get; set; } = new();
+
+	public override string ToString()
+	{
+		return $"{UserDisplayName} ({UserEmail})";
+	}
 }

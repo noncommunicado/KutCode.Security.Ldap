@@ -19,6 +19,7 @@ public static class SwaggerConfiguration
 			o.TagDescriptions = t => {
 				t["Auth"] = "Authorization endpoints";
 				t["Ping"] = "App availability testing";
+				t["Objects"] = "Interact with other telegram objects";
 			};
 		});
 		return builder;

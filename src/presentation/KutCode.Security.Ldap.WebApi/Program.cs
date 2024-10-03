@@ -6,9 +6,6 @@ using KutCode.Security.Ldap.Rpc;
 using KutCode.Security.Ldap.WebApi.Configuration;
 using KutCode.Security.Ldap.WebApi.Configuration.Models;
 using KutCode.Security.Ldap.WebApi.Rpc.Auth;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Options;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +41,10 @@ app.UseFastEndpoints(c => {
 { // rpc
 	var rpcConfigService = app.Services.GetService<RpcConfigDto>();
 	if (rpcConfigService is not null && rpcConfigService.Enabled) {
-		app.MapHandlers(h => { h.Register<LdapAuthCommand, RpcAuthHandler, LdapAuthenticationResponse>(); });
+		app.MapHandlers(h => {
+			h.Register<LdapAuthCommand, RpcAuthHandler, LdapAuthenticationResponse>(); 
+			h.Register<LdapGetUserListCommand, RpcUserListHandler, List<LdapUserData>>();
+		});
 		app.MapGrpcReflectionService();
 	}
 }

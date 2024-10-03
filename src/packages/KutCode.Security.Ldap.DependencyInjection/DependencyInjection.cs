@@ -3,6 +3,7 @@ using KutCode.Security.Ldap.DependencyInjection.Models;
 using KutCode.Security.Ldap.DependencyInjection.Static;
 using KutCode.Security.Ldap.Http;
 using KutCode.Security.Ldap.Interfaces;
+using KutCode.Security.Ldap.Models;
 using KutCode.Security.Ldap.Rpc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +59,7 @@ public static class DependencyInjection
 			throw new ArgumentException($"Configuration url for {nameof(rpcBaseUrl)} is null or empty");
 		app.MapRemote(rpcBaseUrl, c => {
 			c.Register<LdapAuthCommand, LdapAuthenticationResponse>();
+			c.Register<LdapGetUserListCommand, List<LdapUserData>>();
 		});
 		return app;
 	}

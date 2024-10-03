@@ -1,6 +1,7 @@
 using FastEndpoints;
 using KutCode.Security.Ldap.Http;
 using KutCode.Security.Ldap.Rpc;
+using KutCode.Security.Ldap.WebApi.Services.Ldap;
 using Serilog;
 
 namespace KutCode.Security.Ldap.WebApi.Rpc.Auth;
