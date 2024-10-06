@@ -31,7 +31,7 @@ public static class FastEndpointsConfiguration
 	private static WebApplicationBuilder AddRpc(this WebApplicationBuilder bldr)
 	{
 		var config = bldr.Configuration.GetSection("Rpc").Get<RpcConfigDto>();
-		var basePort = bldr.Configuration.GetSection("ListenPort").Get<int?>() ?? 80;
+		var basePort = bldr.Configuration.GetSection("ListenPort").Get<int?>() ?? 8080;
 		if (config is null || config.Enabled == false) return bldr;
 		
 		bldr.Services.AddSingleton(config);

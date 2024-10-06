@@ -27,24 +27,10 @@ Shure, you can produce manual installation with dotnet-runtime.
 ```bash
 cd ./src/presentation/KutCode.Security.Ldap.WebApi
 docker build -t ldap .
-docker run -d -p 8080:80 -v ./appsettings:/app/appsettings -v ./logs:/apt/logs -e ASPNETCORE_URLS=http://+:80 ldap
+docker run -d -p 8080:8080 -v ./appsettings:/app/appsettings -v ./logs:/apt/logs -e ASPNETCORE_URLS=http://+:80 ldap
 ```
 #### Docker compose
-From the solution root directory:
-```bash
-ls -la
-# be sure that docker-compose.yml is presented
-docker compose up -d
-# if your docker hasn't 'compose' command, try: 'docker-compose'
-
-# uncomment 'image' section if you use network registry  
-  #image: registry.neftm.local/ldap  
-
-# leave 'context' section if you use local solution files  
-  #build:  
-    #context: src/presentation/KutCode.Security.Ldap.WebApi  
-```
-`docker-compose.yml` file example:
+Edit `docker-compose.yml` file:
 ```bash 
 services: 
     webapi:
@@ -53,18 +39,26 @@ services:
             # set path to source code project directory
             context: src/presentation/KutCode.Security.Ldap.WebApi
         ports: 
-            - 9080:80
+            - 9080:8080
         environment:
             ASPNETCORE_ENVIRONMENT: Production
-            ListenPort: 80 ## not required
+            ListenPort: 8080 ## not required, 8080 by default
         volumes:
           - ./appsettings:/app/appsettings
           - ./logs:/app/logs
 ```
+Execute from the solution root directory:
+```bash
+docker compose up -d  
+```
 
 #### Verify installation
 To check installation open in browser:  
-`http://localhost:[your port]/swagger`
+`http://localhost:[your port]/swagger`  
+OR  
+```bash
+curl http://[ip]:[port]/swagger -v
+```
 
 
 
@@ -83,7 +77,11 @@ In application root `/appsettings` directory create `appsettings.json` file with
     "AdditionalLdapFilter": "&(objectClass=user)(objectClass=person)",
     "LoginAttribute": "sAMAccountName",
     "DisplayNameAttribute": "displayName",
-    "UseSsl": false
+    "UseSsl": false,
+    "ServiceAccount": {
+      "Username": "domain-login",
+      "Password": "password"
+    }
   },
   "Rpc":{
     "Enabled": false,
@@ -110,6 +108,9 @@ Here some information about this settings:
   - `DisplayNameAttribute` - LDAP display name attribute
   - `EmailAttribute` - LDAP email attribute
   - `UseSsl` - Should LDAP connection use ssl
+  - `ServiceAccount` - Account to load domain users *(don't forget about account domain read permissions)*
+    - `Username` - Domain account username
+    - `Password` - Domain account password
 - `Rpc` - gRPC settings
   - `Enabled` - will application accept gRPC connections
   - `Port` - port for HTTP2 connections (cause gRPC works on HTTP2), do not set same port that Web-API use if connections will be not secured with TLS
@@ -123,9 +124,10 @@ Here some information about this settings:
 After launching the application, you can access the web api from the browser using `Swagger UI`:  
 `http://localhost:[your port]/swagger`
 
-Here is some methods description:
+Here is methods description:
 - GET: `/api/v1/ping` - check if service is up
 - POST: `/api/v1/auth` - authenticate user with LDAP by login/password
+- GET: `/api/v1/objects/users` - get all domain users *(may take long time to load, based on domain size)*
 
 ### POST `/api/v1/auth` schemes
 JSON request body:
