@@ -19,14 +19,13 @@ public sealed class LdapService
 
 	public LdapAuthenticationResponse Authenticate(string login, string password)
 	{
-		var userName = LdapUtils.GetUsernameForAuthentication(
-			_ldapOptions.Value.ServiceAccount.Username, _ldapOptions.Value.DomainName);
+		var userName = LdapUtils.GetUsernameForAuthentication(login, _ldapOptions.Value.DomainName);
 		using var conn = _cm.GetConnection();
 		try {
 			conn.Bind(userName, password);
 		}
-		catch { // if failed to auth -> credentials incorrect
-			Log.Error("Failed to authorize in {LdapServer}:{Port}", _ldapOptions.Value.Server, _ldapOptions.Value.ServerPort);
+		catch (Exception ex) { // if failed to auth -> credentials incorrect
+			Log.Error(ex, "Failed to authorize in {LdapServer}:{Port}", _ldapOptions.Value.Server, _ldapOptions.Value.ServerPort);
 			return new LdapAuthenticationResponse {Authorized = false };
 		}
 		var filter = LdapUtils.GetLdapFilter(_ldapOptions.Value.AdditionalLdapFilter, _ldapOptions.Value.LoginAttribute, login);
