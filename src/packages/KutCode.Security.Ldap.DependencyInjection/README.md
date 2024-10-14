@@ -19,6 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration.GetRequiredSection("Ldap");
 builder.Services
 	.AddKutCodeLdapRepository(config, ServiceLifetime.Scoped);
+// or keyed
+builder.Services
+	.AddKeyedKutCodeLdapRepository("some-key", config, ServiceLifetime.Scoped);
 ```
 
 🔍 `appsettings.json` example: 
@@ -35,6 +38,10 @@ builder.Services
 class Worker {
     private readonly IKutCodeLdapRepository _ldap;
     public Worker(IKutCodeLdapRepository ldap) {
+        _ldap = ldap;
+    }
+    // or keyed
+    public Worker([FromKeyedServices("some-key")] IKutCodeLdapRepository ldap) {
         _ldap = ldap;
     }
     

@@ -9,4 +9,9 @@ public sealed class InjectableKutCodeLdapRepository : KutCodeLdapRepository
 	{
 		this.Client = httpClientFactory.CreateClient(HttpClientNames.HttpClientName);
 	}
+	
+	public InjectableKutCodeLdapRepository(IHttpClientFactory httpClientFactory, string clientName)
+	{
+		this.Client = httpClientFactory.CreateClient(clientName);
+	}
 }

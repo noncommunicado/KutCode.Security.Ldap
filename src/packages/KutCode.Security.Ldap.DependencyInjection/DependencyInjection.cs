@@ -14,6 +14,11 @@ namespace KutCode.Security.Ldap.DependencyInjection;
 
 public static class DependencyInjection
 {
+	/// <summary>
+	/// Inject KutCode LDAP repository with interface <see cref="IKutCodeLdapRepository"/>
+	/// </summary>
+	/// <param name="configurationSection">Configuration of type <see cref="LdapRepositoryInjectionConfiguration"/></param>
+	/// <returns>IServiceCollection</returns>
 	public static IServiceCollection AddKutCodeLdapRepository(
 		this IServiceCollection services,
 		IConfigurationSection configurationSection,
@@ -23,6 +28,10 @@ public static class DependencyInjection
 		services.Configure<LdapRepositoryInjectionConfiguration>(configurationSection);
 		return AddKutCodeLdapRepository(services, configuration, lifetimeType);
 	}
+	/// <summary>
+	/// Inject KutCode LDAP repository with interface <see cref="IKutCodeLdapRepository"/>
+	/// </summary>
+	/// <returns>IServiceCollection</returns>
 	public static IServiceCollection AddKutCodeLdapRepository(
 		this IServiceCollection services, 
 		LdapRepositoryInjectionConfiguration configuration, 
@@ -38,6 +47,43 @@ public static class DependencyInjection
 
 		return services;
 	}
+
+	#region Keyed
+
+	/// <summary>
+	/// Inject Keyed KutCode LDAP repository with interface <see cref="IKutCodeLdapRepository"/>
+	/// </summary>
+	/// <param name="configurationSection">Configuration of type <see cref="LdapRepositoryInjectionConfiguration"/></param>
+	/// <returns>IServiceCollection</returns>
+	public static IServiceCollection AddKeyedKutCodeLdapRepository(
+		this IServiceCollection services,
+		string key,
+		IConfigurationSection configurationSection,
+		ServiceLifetime lifetimeType)
+	{
+		var configuration = configurationSection.Get<LdapRepositoryInjectionConfiguration>()!;
+		return AddKeyedKutCodeLdapRepository(services, key, configuration, lifetimeType);
+	}
+	/// <summary>
+	/// Inject Keyed KutCode LDAP repository with interface <see cref="IKutCodeLdapRepository"/>
+	/// </summary>
+	/// <returns>IServiceCollection</returns>
+	public static IServiceCollection AddKeyedKutCodeLdapRepository(
+		this IServiceCollection services, 
+		string key,
+		LdapRepositoryInjectionConfiguration configuration, 
+		ServiceLifetime lifetimeType)
+	{
+		services.AddHttpClient(key, client => {
+			client.BaseAddress = new Uri(configuration.BaseUrl.TrimEnd(' ', '/'));
+		});
+		Func<IServiceProvider, object?, object> factory = (provider, _)
+			=> new InjectableKutCodeLdapRepository(provider.GetRequiredService<IHttpClientFactory>(), key);
+		services.Add(new ServiceDescriptor(typeof(IKutCodeLdapRepository), key, factory, lifetimeType));
+		return services;
+	}
+
+	#endregion
 	
 	/// <summary>
 	/// Use this method to configure RPC calls to LDAP service. <br/> 
